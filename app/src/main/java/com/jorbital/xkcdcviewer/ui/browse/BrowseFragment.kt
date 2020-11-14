@@ -1,16 +1,17 @@
 package com.jorbital.xkcdcviewer.ui.browse
 
 import android.os.Bundle
+import android.text.Editable
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputLayout
 import com.jorbital.service.data.ComicDto
 import com.jorbital.xkcdcviewer.R
 import com.jorbital.xkcdcviewer.databinding.BrowseFragmentBinding
-import com.jorbital.xkcdcviewer.extensions.afterTextChanged
 import com.jorbital.xkcdcviewer.extensions.observe
 import com.jorbital.xkcdcviewer.extensions.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -42,8 +43,8 @@ class BrowseFragment : Fragment(R.layout.browse_fragment) {
         builder.setTitle(getString(R.string.go_to_specific_comic))
         val dialogLayout = layoutInflater.inflate(R.layout.go_to_comic_dialog, null)
         val inputLayout = dialogLayout.findViewById<TextInputLayout>(R.id.text_field)
-        inputLayout.editText?.afterTextChanged {
-            if (isValidComicNumber(it) || it.isBlank()) {
+        inputLayout.editText?.doAfterTextChanged {
+            if (isValidComicNumber(it) || it.isNullOrBlank()) {
                 inputLayout.error = null
             } else {
                 inputLayout.error = getString(R.string.enter_a_valid_number)
@@ -61,8 +62,8 @@ class BrowseFragment : Fragment(R.layout.browse_fragment) {
         builder.show()
     }
 
-    private fun isValidComicNumber(number: String): Boolean {
-        number.toIntOrNull()?.let {
+    private fun isValidComicNumber(number: Editable?): Boolean {
+        number?.toString()?.toIntOrNull()?.let {
             if (it > 0 && it <= viewModel.latestComicNumber) return true
         }
         return false
