@@ -18,6 +18,10 @@ inline fun <T : ViewBinding> AppCompatActivity.viewBinding(
     crossinline bindingInflater: (LayoutInflater) -> T
 ) = lazy(LazyThreadSafetyMode.NONE) { bindingInflater.invoke(layoutInflater) }
 
+inline fun <T : ViewBinding> View.viewBinding(
+    crossinline viewBindingFactory: (View) -> T
+) = lazy(LazyThreadSafetyMode.NONE) { viewBindingFactory.invoke(this) }
+
 /**
  * This class exists to avoid memory leaks.  Fragments live longer than their views, so the view binding
  * must be removed when fragment goes to backstack and readded when it returns.  This class gets all of

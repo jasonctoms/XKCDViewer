@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.jorbital.service.data.ComicDto
 import com.jorbital.xkcdcviewer.R
 import com.jorbital.xkcdcviewer.databinding.BrowseFragmentBinding
 import com.jorbital.xkcdcviewer.extensions.observe
@@ -24,7 +25,12 @@ private val binding by viewBinding(BrowseFragmentBinding::bind)
         super.onViewCreated(view, savedInstanceState)
         observe(viewModel.selectedComic){
             Timber.d("selected comic is $it")
+            populateComicView(it)
         }
         viewModel.getLatestComic()
+    }
+
+    private fun populateComicView(comic: ComicDto){
+        binding.comicView.populateView(comic)
     }
 }

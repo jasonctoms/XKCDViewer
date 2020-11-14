@@ -3,4 +3,8 @@
     <string name="title_browse">Browse</string>
     <string name="title_search">Search</string>
     <string name="title_favorites">Favorites</string>
+    <string name="next_button">Next</string>
+    <string name="previous_button">Previous</string>
+    <string name="go_to_button">Go To #</string>
+    <string name="comic_number_and_title">%1$d - %2$s</string>
 </resources>
