@@ -10,4 +10,10 @@ java {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation"com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$kotlin_serialization_retrofit_version"
+
+    implementation "org.koin:koin-android:$koin_version"
 }
