@@ -1,4 +1,4 @@
-package com.jorbital.xkcdcviewer.ui.dashboard
+package com.jorbital.xkcdcviewer.ui.browse
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.jorbital.xkcdcviewer.R
 
-class DashboardFragment : Fragment() {
+class BrowseFragment : Fragment() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
+    private lateinit var browseViewModel: BrowseViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
+        browseViewModel =
+            ViewModelProvider(this).get(BrowseViewModel::class.java)
+        val root = inflater.inflate(R.layout.browse_fragment, container, false)
+        val textView: TextView = root.findViewById(R.id.text_home)
+        browseViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
