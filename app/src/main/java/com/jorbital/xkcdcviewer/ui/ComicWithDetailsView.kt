@@ -33,7 +33,13 @@ class ComicWithDetailsView : ConstraintLayout {
     }
 
     private fun formattedDate(year: Int, month: Int, day: Int): String {
-        val date = LocalDate.parse("$year-$month-$day")
+        //this is super hacky and I don't like it, but dates are annoying and would rather spend time on android things
+        val date = LocalDate.parse("$year-${month.fixDayAndMonth()}-${day.fixDayAndMonth()}")
         return date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL))
+    }
+
+    private fun Int.fixDayAndMonth(): String{
+        if (this.toString().length == 1) return "0$this"
+        return this.toString()
     }
 }

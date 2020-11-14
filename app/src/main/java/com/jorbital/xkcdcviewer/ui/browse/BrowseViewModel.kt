@@ -18,7 +18,29 @@ class BrowseViewModel(private val xkcdRepository: XkcdRepository) : ViewModel() 
     private val _selectedComic = MutableLiveData<ComicDto>()
     val selectedComic: LiveData<ComicDto> = _selectedComic
 
+    var latestComicNumber = 0
+    var currentComicNumber = 0
+
     fun getLatestComic() {
-        xkcdRepository.getCurrentComic().onStart { _loading.postValue(null) }.onEach { _selectedComic.postValue(it) }.launchIn(viewModelScope)
+        xkcdRepository.getCurrentComic().onStart { _loading.postValue("") }.onEach {
+            latestComicNumber = it.comicNumber
+            currentComicNumber = it.comicNumber
+            _selectedComic.postValue(it)
+        }.launchIn(viewModelScope)
+    }
+
+    fun getNextComic() {
+        getSpecificComic(currentComicNumber + 1)
+    }
+
+    fun getPreviousComic() {
+        getSpecificComic(currentComicNumber - 1)
+    }
+
+    fun getSpecificComic(comicNumber: Int) {
+        xkcdRepository.getSpecificComic(comicNumber).onStart { _loading.postValue("") }.onEach {
+            currentComicNumber = it.comicNumber
+            _selectedComic.postValue(it)
+        }.launchIn(viewModelScope)
     }
 }

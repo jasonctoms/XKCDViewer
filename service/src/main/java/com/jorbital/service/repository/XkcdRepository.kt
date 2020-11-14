@@ -9,4 +9,5 @@ import kotlinx.coroutines.flow.flowOn
 
 class XkcdRepository(private val api: XkcdApi) {
     fun getCurrentComic() : Flow<ComicDto> = flow { emit(api.getLatestComic()) }.flowOn(Dispatchers.IO)
+    fun getSpecificComic(number: Int) : Flow<ComicDto> = flow { emit(api.getSpecificComic(number)) }.flowOn(Dispatchers.IO)
 }
