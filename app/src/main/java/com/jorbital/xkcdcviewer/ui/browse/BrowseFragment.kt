@@ -9,23 +9,22 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.jorbital.xkcdcviewer.R
+import com.jorbital.xkcdcviewer.databinding.BrowseFragmentBinding
+import com.jorbital.xkcdcviewer.extensions.observe
+import com.jorbital.xkcdcviewer.extensions.viewBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
-class BrowseFragment : Fragment() {
+class BrowseFragment : Fragment(R.layout.browse_fragment) {
 
-    private lateinit var browseViewModel: BrowseViewModel
+private val binding by viewBinding(BrowseFragmentBinding::bind)
+    private val viewModel: BrowseViewModel by viewModel()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        browseViewModel =
-            ViewModelProvider(this).get(BrowseViewModel::class.java)
-        val root = inflater.inflate(R.layout.browse_fragment, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
-        browseViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observe(viewModel.selectedComic){
+            Timber.d("selected comic is $it")
+        }
+        viewModel.getLatestComic()
     }
 }

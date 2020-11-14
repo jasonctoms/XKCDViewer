@@ -23,6 +23,8 @@ inline fun <T : ViewBinding> AppCompatActivity.viewBinding(
  * must be removed when fragment goes to backstack and readded when it returns.  This class gets all of
  * that logic out of the fragment so we can one-line our view bindings
  *
+ * note: this class is taken from another one of my projects
+ *
  * https://medium.com/@Zhuinden/simple-one-liner-viewbinding-in-fragments-and-activities-with-kotlin-961430c6c07c
  */
 class FragmentViewBindingDelegate<T : ViewBinding>(
