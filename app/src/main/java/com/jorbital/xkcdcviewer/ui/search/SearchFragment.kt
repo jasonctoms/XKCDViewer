@@ -1,31 +1,40 @@
 package com.jorbital.xkcdcviewer.ui.search
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.jorbital.xkcdcviewer.R
+import com.jorbital.xkcdcviewer.databinding.SearchFragmentBinding
+import com.jorbital.xkcdcviewer.extensions.observe
+import com.jorbital.xkcdcviewer.extensions.viewBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment(R.layout.search_fragment) {
 
-    private lateinit var searchViewModel: SearchViewModel
+    private val binding by viewBinding(SearchFragmentBinding::bind)
+    private val viewModel: SearchViewModel by viewModel()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        searchViewModel =
-            ViewModelProvider(this).get(SearchViewModel::class.java)
-        val root = inflater.inflate(R.layout.search_fragment, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        searchViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observe(viewModel.selectedComic) {
+            Timber.d("selected comic is $it")
+            binding.comicView.populateView(it)
+            binding.loading.isVisible = false
+        }
+        observe(viewModel.percentMatch) {
+            binding.percentMatch.text = getString(R.string.percent_match, it.toString())
+        }
+        observe(viewModel.loading) {
+            binding.loading.isVisible = true
+        }
+
+        binding.searchButton.setOnClickListener {
+            val text = binding.searchField.editText?.text
+            if (!text.isNullOrBlank()){
+                viewModel.performSearch(text.toString())
+            }
+        }
     }
 }

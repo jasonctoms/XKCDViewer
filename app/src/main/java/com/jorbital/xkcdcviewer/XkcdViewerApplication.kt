@@ -1,8 +1,10 @@
 package com.jorbital.xkcdcviewer
 
 import android.app.Application
+import com.jorbital.service.koin.RelevantXkcdKoinModule
 import com.jorbital.service.koin.XkcdKoinModule
 import com.jorbital.xkcdcviewer.koin.BrowseKoinModule
+import com.jorbital.xkcdcviewer.koin.SearchKoinModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
@@ -20,7 +22,7 @@ class XkcdViewerApplication : Application() {
     private fun setupKoin() {
         startKoin {
             androidContext(this@XkcdViewerApplication)
-            modules(listOf(XkcdKoinModule.module, BrowseKoinModule.module))
+            modules(listOf(XkcdKoinModule.module, RelevantXkcdKoinModule.module, BrowseKoinModule.module, SearchKoinModule.module))
         }
     }
 }

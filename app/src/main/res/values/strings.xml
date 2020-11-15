@@ -10,4 +10,7 @@
     <string name="comic_number_hint">XKCD number</string>
     <string name="go_to_specific_comic">Go to specific comic</string>
     <string name="enter_a_valid_number">Enter a valid comic number</string>
+    <string name="search_button">Search</string>
+    <string name="search_hint">Search words or sentences</string>
+    <string name="percent_match">Percent Match: %1$s&#65130;</string>
 </resources>

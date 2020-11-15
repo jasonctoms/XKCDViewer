@@ -1,6 +1,7 @@
 package com.jorbital.service.koin
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.jorbital.service.api.RelevantXkcdApi
 import com.jorbital.service.api.XkcdApi
 import com.jorbital.service.repository.XkcdRepository
 import kotlinx.serialization.ExperimentalSerializationApi
