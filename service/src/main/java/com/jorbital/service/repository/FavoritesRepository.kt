@@ -20,11 +20,11 @@ class FavoritesRepository(private val favoritesStorage: FavoritesStorage) {
         }
     }
 
-    suspend fun toggleFavorite(comicNumber: Int){
-        comicIsFavorite(comicNumber).collect {isFavorite ->
-            if (isFavorite){
+    suspend fun toggleFavorite(comicNumber: Int) {
+        comicIsFavorite(comicNumber).collect { isFavorite ->
+            if (isFavorite) {
                 favoritesStorage.removeFavorite(comicNumber)
-            } else{
+            } else {
                 favoritesStorage.addFavorite(comicNumber)
             }
         }

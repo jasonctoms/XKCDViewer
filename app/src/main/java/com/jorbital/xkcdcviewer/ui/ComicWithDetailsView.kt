@@ -12,9 +12,6 @@ import com.jorbital.xkcdcviewer.R
 import com.jorbital.xkcdcviewer.databinding.ComicWithDetailsViewBinding
 import com.jorbital.xkcdcviewer.extensions.viewBinding
 import com.jorbital.xkcdcviewer.util.DateHelper.formattedDate
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 
 class ComicWithDetailsView : ConstraintLayout {
     private val binding by viewBinding(ComicWithDetailsViewBinding::bind)
