@@ -61,11 +61,11 @@
         android:id="@+id/comic_image"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:minHeight="400dp"
+        android:minHeight="800dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/add_favorite_button"
-        tools:layout_height="400dp" />
+        tools:layout_height="800dp" />
 
     <TextView
         android:id="@+id/comic_alt_text"
