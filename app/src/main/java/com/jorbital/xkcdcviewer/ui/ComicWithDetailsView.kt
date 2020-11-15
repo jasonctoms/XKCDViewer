@@ -5,6 +5,7 @@ import android.content.Intent
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import coil.load
 import com.jorbital.service.data.ComicDto
 import com.jorbital.xkcdcviewer.R
@@ -25,12 +26,26 @@ class ComicWithDetailsView : ConstraintLayout {
         LayoutInflater.from(context).inflate(R.layout.comic_with_details_view, this, true)
     }
 
-    fun populateView(comic: ComicDto) {
+    private var isFavorite: Boolean = false
+
+    fun populateView(comic: ComicDto, favoriteClicked: (Int) -> Unit) {
         binding.comicNumberAndTitle.text = context.getString(R.string.comic_number_and_title, comic.comicNumber, comic.title)
         binding.comicDate.text = formattedDate(comic.year, comic.month, comic.day)
         binding.comicAltText.text = comic.altText
         binding.comicImage.load(comic.imageUrl)
         binding.comicImage.contentDescription = comic.transcript
+
+        isFavorite = comic.favorite
+
+        binding.addFavoriteButton.isVisible = true
+        binding.shareComicButton.isVisible = true
+
+        binding.addFavoriteButton.setImageResource(if (isFavorite) R.drawable.ic_favorite_filled else R.drawable.ic_favorite_outline)
+        binding.addFavoriteButton.setOnClickListener {
+            binding.addFavoriteButton.setImageResource(if (isFavorite) R.drawable.ic_favorite_outline else R.drawable.ic_favorite_filled)
+            isFavorite = !isFavorite
+            favoriteClicked(comic.comicNumber)
+        }
 
         binding.shareComicButton.setOnClickListener {
             val sendIntent: Intent = Intent().apply {
@@ -50,7 +65,7 @@ class ComicWithDetailsView : ConstraintLayout {
         return date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL))
     }
 
-    private fun Int.fixDayAndMonth(): String{
+    private fun Int.fixDayAndMonth(): String {
         if (this.toString().length == 1) return "0$this"
         return this.toString()
     }

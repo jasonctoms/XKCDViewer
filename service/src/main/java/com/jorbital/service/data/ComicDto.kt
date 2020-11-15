@@ -16,4 +16,5 @@ data class ComicDto(
     val link: String,
     val news: String,
     val transcript: String,
+    val favorite: Boolean = false
 )

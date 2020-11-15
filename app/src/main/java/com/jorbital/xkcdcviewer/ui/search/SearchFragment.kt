@@ -20,7 +20,7 @@ class SearchFragment : Fragment(R.layout.search_fragment) {
         super.onViewCreated(view, savedInstanceState)
         observe(viewModel.selectedComic) {
             Timber.d("selected comic is $it")
-            binding.comicView.populateView(it)
+            binding.comicView.populateView(it, favoriteClicked)
             binding.loading.isVisible = false
         }
         observe(viewModel.percentMatch) {
@@ -32,9 +32,11 @@ class SearchFragment : Fragment(R.layout.search_fragment) {
 
         binding.searchButton.setOnClickListener {
             val text = binding.searchField.editText?.text
-            if (!text.isNullOrBlank()){
+            if (!text.isNullOrBlank()) {
                 viewModel.performSearch(text.toString())
             }
         }
     }
+
+    private val favoriteClicked: (Int) -> Unit = { viewModel.toggleFavorite(it) }
 }

@@ -73,6 +73,8 @@ class BrowseFragment : Fragment(R.layout.browse_fragment) {
         binding.nextButton.isEnabled = viewModel.currentComicNumber < viewModel.latestComicNumber
         binding.previousButton.isEnabled = viewModel.currentComicNumber > 1
 
-        binding.comicView.populateView(comic)
+        binding.comicView.populateView(comic, favoriteClicked)
     }
+
+    private val favoriteClicked: (Int) -> Unit = { viewModel.toggleFavorite(it) }
 }
