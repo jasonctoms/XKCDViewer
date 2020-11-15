@@ -9,7 +9,12 @@
         android:id="@+id/navigation_browse"
         android:name="com.jorbital.xkcdcviewer.ui.browse.BrowseFragment"
         android:label="@string/title_browse"
-        tools:layout="@layout/browse_fragment" />
+        tools:layout="@layout/browse_fragment" >
+        <argument
+            android:name="comicNumber"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_search"
@@ -21,5 +26,14 @@
         android:id="@+id/navigation_favorites"
         android:name="com.jorbital.xkcdcviewer.ui.favorites.FavoritesFragment"
         android:label="@string/title_favorites"
-        tools:layout="@layout/favorites_fragment" />
+        tools:layout="@layout/favorites_fragment" >
+        <action
+            android:id="@+id/action_navigation_favorites_to_navigation_browse"
+            app:destination="@id/navigation_browse" >
+            <argument
+                android:name="comicNumber"
+                app:argType="integer"
+                android:defaultValue="0" />
+        </action>
+    </fragment>
 </navigation>

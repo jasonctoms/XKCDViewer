@@ -3,12 +3,12 @@ package com.jorbital.xkcdcviewer.ui.favorites
 import android.content.Context
 import android.util.AttributeSet
 import androidx.cardview.widget.CardView
+import androidx.navigation.findNavController
 import coil.load
 import com.jorbital.service.data.ComicDto
 import com.jorbital.xkcdcviewer.R
 import com.jorbital.xkcdcviewer.databinding.FavoriteItemViewBinding
 import com.jorbital.xkcdcviewer.extensions.viewBinding
-import com.jorbital.xkcdcviewer.util.DateHelper
 import com.jorbital.xkcdcviewer.util.DateHelper.formattedDate
 
 class FavoriteItemView : CardView {
@@ -19,8 +19,11 @@ class FavoriteItemView : CardView {
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
 
-    fun bind(comic: ComicDto, itemClicked: (Int) -> Unit) {
-        setOnClickListener { itemClicked(comic.comicNumber) }
+    fun bind(comic: ComicDto) {
+        setOnClickListener {
+            val action = FavoritesFragmentDirections.actionNavigationFavoritesToNavigationBrowse(comic.comicNumber)
+            findNavController().navigate(action)
+        }
 
         binding.comicNumberAndTitle.text = context.getString(R.string.comic_number_and_title, comic.comicNumber, comic.title)
         binding.comicDate.text = formattedDate(comic.year, comic.month, comic.day)

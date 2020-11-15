@@ -8,6 +8,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputLayout
 import com.jorbital.service.data.ComicDto
 import com.jorbital.xkcdcviewer.R
@@ -22,6 +23,8 @@ class BrowseFragment : Fragment(R.layout.browse_fragment) {
     private val binding by viewBinding(BrowseFragmentBinding::bind)
     private val viewModel: BrowseViewModel by viewModel()
 
+    private val args: BrowseFragmentArgs by navArgs()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observe(viewModel.selectedComic) {
@@ -32,7 +35,12 @@ class BrowseFragment : Fragment(R.layout.browse_fragment) {
         observe(viewModel.loading) {
             binding.loading.isVisible = true
         }
-        viewModel.getLatestComic()
+        if (args.comicNumber > 0) {
+            viewModel.setLatestComicNumber()
+            viewModel.getSpecificComic(args.comicNumber)
+        } else {
+            viewModel.getLatestComic()
+        }
         binding.nextButton.setOnClickListener { viewModel.getNextComic() }
         binding.previousButton.setOnClickListener { viewModel.getPreviousComic() }
         binding.goToButton.setOnClickListener { openGoToDialog() }

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jorbital.service.data.ComicDto
 import com.jorbital.xkcdcviewer.R
 
-class FavoritesAdapter(favorites: List<ComicDto>, private val itemClick: (Int) -> Unit) :
+class FavoritesAdapter(favorites: List<ComicDto>) :
     RecyclerView.Adapter<FavoritesAdapter.FavoriteViewHolder>() {
 
     var favoritesList = favorites
@@ -23,7 +23,7 @@ class FavoritesAdapter(favorites: List<ComicDto>, private val itemClick: (Int) -
     }
 
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
-        holder.favoriteItemView.bind(favoritesList[position], itemClick)
+        holder.favoriteItemView.bind(favoritesList[position])
     }
 
     override fun getItemCount(): Int {

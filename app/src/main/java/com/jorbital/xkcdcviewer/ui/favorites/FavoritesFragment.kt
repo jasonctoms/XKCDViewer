@@ -19,6 +19,7 @@ class FavoritesFragment : Fragment(R.layout.favorites_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.loading.isVisible = true
         observe(viewModel.favorites) {
             binding.loading.isVisible = false
             setupList(it)
@@ -35,10 +36,8 @@ class FavoritesFragment : Fragment(R.layout.favorites_fragment) {
             if (this.adapter == null) {
                 hasFixedSize()
                 layoutManager = LinearLayoutManager(activity)
-                adapter = FavoritesAdapter(favorites = favorites, itemClick = favoriteClicked)
+                adapter = FavoritesAdapter(favorites = favorites)
             }
         }
     }
-
-    private val favoriteClicked: (Int) -> Unit = { Toast.makeText(requireContext(), "You did it", Toast.LENGTH_SHORT).show() }
 }

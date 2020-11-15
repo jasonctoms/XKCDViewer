@@ -34,6 +34,10 @@ class BrowseViewModel(private val xkcdRepository: XkcdRepository, private val fa
         }.launchIn(viewModelScope)
     }
 
+    fun setLatestComicNumber() {
+        xkcdRepository.getCurrentComic().onEach { latestComicNumber = it.comicNumber }.launchIn(viewModelScope)
+    }
+
     fun getNextComic() {
         getSpecificComic(currentComicNumber + 1)
     }
