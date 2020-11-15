@@ -1,6 +1,7 @@
 package com.jorbital.xkcdcviewer.ui
 
 import android.content.Context
+import android.content.Intent
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -30,6 +31,17 @@ class ComicWithDetailsView : ConstraintLayout {
         binding.comicAltText.text = comic.altText
         binding.comicImage.load(comic.imageUrl)
         binding.comicImage.contentDescription = comic.transcript
+
+        binding.shareComicButton.setOnClickListener {
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, "https://xkcd.com/${comic.comicNumber}/")
+                type = "text/plain"
+            }
+
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            context.startActivity(shareIntent)
+        }
     }
 
     private fun formattedDate(year: Int, month: Int, day: Int): String {
