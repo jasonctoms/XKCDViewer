@@ -1,31 +1,44 @@
 package com.jorbital.xkcdcviewer.ui.favorites
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.jorbital.service.data.ComicDto
 import com.jorbital.xkcdcviewer.R
+import com.jorbital.xkcdcviewer.databinding.FavoritesFragmentBinding
+import com.jorbital.xkcdcviewer.extensions.observe
+import com.jorbital.xkcdcviewer.extensions.viewBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FavoritesFragment : Fragment() {
+class FavoritesFragment : Fragment(R.layout.favorites_fragment) {
+    private val binding by viewBinding(FavoritesFragmentBinding::bind)
+    private val viewModel: FavoritesViewModel by viewModel()
 
-    private lateinit var favoritesViewModel: FavoritesViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        favoritesViewModel =
-            ViewModelProvider(this).get(FavoritesViewModel::class.java)
-        val root = inflater.inflate(R.layout.favorites_fragment, container, false)
-        val textView: TextView = root.findViewById(R.id.text_notifications)
-        favoritesViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observe(viewModel.favorites) {
+            binding.loading.isVisible = false
+            setupList(it)
+        }
+        observe(viewModel.emptyFavorites) {
+            binding.loading.isVisible = false
+            binding.favoritesRv.isVisible = false
+            binding.emptyFavorites.isVisible = true
+        }
     }
+
+    private fun setupList(favorites: List<ComicDto>) {
+        binding.favoritesRv.apply {
+            if (this.adapter == null) {
+                hasFixedSize()
+                layoutManager = LinearLayoutManager(activity)
+                adapter = FavoritesAdapter(favorites = favorites, itemClick = favoriteClicked)
+            }
+        }
+    }
+
+    private val favoriteClicked: (Int) -> Unit = { Toast.makeText(requireContext(), "You did it", Toast.LENGTH_SHORT).show() }
 }

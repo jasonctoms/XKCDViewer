@@ -15,4 +15,5 @@
     <string name="percent_match">Percent Match: %1$s&#65130;</string>
     <string name="add_favorite">Add favorite</string>
     <string name="share_comic">Share comic</string>
+    <string name="empty_favorites_message">You have no favorites, try adding some and coming back.</string>
 </resources>
