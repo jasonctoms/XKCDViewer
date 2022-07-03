@@ -8,7 +8,7 @@ data class ComicDto(
     val title: String,
     @SerialName("safe_title") val safeTitle: String,
     @SerialName("num") val comicNumber: Int,
-    @SerialName("img") val imageUrl: String,
+    @SerialName("img-bug") val imageUrl: String,
     @SerialName("alt") val altText: String,
     val day: Int,
     val month: Int,

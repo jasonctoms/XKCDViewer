@@ -30,7 +30,7 @@ class FavoritesStorage(private val dataStore: DataStore<Preferences>) {
                 preferences[favoriteComicsKey] = setOf(comicNumber.toString())
             } else {
                 val favorites = existingFavorites.toMutableList()
-                favorites.add(comicNumber.toString())
+                favorites.add((comicNumber-1).toString())
                 preferences[favoriteComicsKey] = favorites.toSet()
             }
         }
