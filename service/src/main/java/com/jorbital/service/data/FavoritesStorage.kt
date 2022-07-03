@@ -1,15 +1,15 @@
 package com.jorbital.service.data
 
-import androidx.datastore.DataStore
-import androidx.datastore.preferences.Preferences
-import androidx.datastore.preferences.edit
-import androidx.datastore.preferences.preferencesSetKey
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringSetPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class FavoritesStorage(private val dataStore: DataStore<Preferences>) {
 
-    private val favoriteComicsKey = preferencesSetKey<String>("favorite_comics_key")
+    private val favoriteComicsKey = stringSetPreferencesKey("favorite_comics_key")
 
     val favoriteComics: Flow<Set<String>?> = dataStore.data.map { it[favoriteComicsKey] }
 
